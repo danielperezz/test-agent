@@ -1,0 +1,62 @@
+name: 'simple-example-agent'
+author: 'MLRun Examples'
+kind: 'fastapi-agent'
+version: '0.1.0'
+description: 'A simple example agent demonstrating environment variables and secrets consumption'
+categories:
+  - 'examples'
+  - 'getting-started'
+  - 'api'
+agent_info:
+  protocol: 'HTTP/REST'
+  framework: 'FastAPI'
+consumption_config:
+  build:
+    requirements: []  # Loaded from requirements.txt
+    default_base_image: 'python:3.11-slim'
+    default_workdir: '/app'
+    build_extra: ''
+  deploy:
+    default_port: 8080
+    default_command: 'python'
+    default_args:
+      - '-m'
+      - 'uvicorn'
+      - 'simple_agent.main:app'
+      - '--host'
+      - '0.0.0.0'
+      - '--port'
+      - '8080'
+    default_direct_pod: false
+  inputs:
+    # Required secret - API key for authentication
+    - name: API_KEY
+      type: secret
+      required: true
+      description: 'API key for authenticating requests to the agent'
+
+    # Optional secret - database password
+    - name: DATABASE_PASSWORD
+      type: secret
+      required: false
+      description: 'Optional database password (demonstrates optional secrets)'
+
+    # Required environment variable - service name
+    - name: SERVICE_NAME
+      type: env
+      required: true
+      description: 'Name of the service (used in responses and logs)'
+
+    # Optional environment variable with default - log level
+    - name: LOG_LEVEL
+      type: env
+      required: false
+      default: 'INFO'
+      description: 'Logging level (DEBUG, INFO, WARNING, ERROR)'
+
+    # Optional environment variable with default - port
+    - name: PORT
+      type: env
+      required: false
+      default: '8080'
+      description: 'Port the application listens on'
