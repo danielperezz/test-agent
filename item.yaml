@@ -1,27 +1,21 @@
-name: 'simple-example-agent'
+name: 'simple-agent'
 author: 'MLRun Examples'
 kind: 'fastapi-agent'
 version: '0.1.0'
-description: 'A simple example agent demonstrating environment variables and secrets consumption'
+description: 'A simple example agent'
 categories:
   - 'examples'
-  - 'getting-started'
-  - 'api'
 agent_info:
-  protocol: 'HTTP/REST'
-  framework: 'FastAPI'
-publish_verifications:
-  code_directory: 'simple_agent'
-  tests_directory: 'tests'
-  tests_requirements:
-    - pytest==8.0.0
-    - httpx==0.27.0
+  protocol: 'A2A'  # Agent-to-Agent communication
+  framework: 'custom'  # Agent framework (e.g., 'LangChain', 'CrewAI', 'custom')
 consumption_config:
   build:
     requirements:
       - fastapi==0.115.0
       - uvicorn==0.30.6
       - pydantic==2.9.0
+      - pytest==8.0.0
+      - httpx==0.27.0
     default_base_image: 'python:3.11-slim'
     default_workdir: '/app'
     build_extra: ''
