@@ -11,7 +11,7 @@ def test_startup_without_api_key():
     # Testing startup failure requires subprocess isolation due to module caching
 
     # Verify that API_KEY is read from environment
-    from simple_agent.main import API_KEY
+    from src.main import API_KEY
 
     # When running with the test fixture, API_KEY should be set
     assert API_KEY is not None
@@ -21,7 +21,7 @@ def test_startup_without_api_key():
 def test_startup_with_api_key(setup_env):
     """Test that startup succeeds when API_KEY is set."""
     from fastapi.testclient import TestClient
-    from simple_agent.main import app
+    from src.main import app
 
     # This should not raise an exception
     client = TestClient(app)
@@ -43,10 +43,10 @@ def test_default_service_name():
     try:
         # Re-import to get new configuration
         import importlib
-        import simple_agent.main
-        importlib.reload(simple_agent.main)
+        import src.main
+        importlib.reload(src.main)
 
-        from simple_agent.main import SERVICE_NAME
+        from src.main import SERVICE_NAME
         assert SERVICE_NAME == "unknown-service"
     finally:
         # Restore original SERVICE_NAME
@@ -68,10 +68,10 @@ def test_default_log_level():
     try:
         # Re-import to get new configuration
         import importlib
-        import simple_agent.main
-        importlib.reload(simple_agent.main)
+        import src.main
+        importlib.reload(src.main)
 
-        from simple_agent.main import LOG_LEVEL
+        from src.main import LOG_LEVEL
         assert LOG_LEVEL == "INFO"
     finally:
         # Restore original LOG_LEVEL

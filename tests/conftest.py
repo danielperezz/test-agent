@@ -28,7 +28,7 @@ def setup_env():
 def client():
     """Create a test client for the FastAPI app."""
     # Import here to ensure environment variables are set
-    from simple_agent.main import app
+    from src.main import app
     return TestClient(app)
 
 
